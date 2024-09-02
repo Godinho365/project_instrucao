@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Listar Seções</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Seções</h1>
+
+        <!-- Botão para adicionar nova seção -->
+        <a href="{% url 'adicionar_secao' %}" class="btn btn-primary mb-3">Adicionar Seção</a>
+
+        <!-- (Opcional) Botão para voltar para a lista de instruções -->
+        <!-- 
+        <a href="{% url 'listar_instrucoes' %}" class="btn btn-secondary mb-3">Voltar para Lista de Instruções</a>
+        -->
+
+        <div class="row">
+            {% for secao in secoes %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ secao.nome }}</h5>
+                            {% if secao.id %}
+                                <a href="{% url 'listar_instrucoes_por_secao' secao.id %}" class="btn btn-info">Ver Instruções</a>
+                            {% else %}
+                                <span class="btn btn-info disabled">Sem Instruções</span>
+                            {% endif %}
+                            <a href="{% url 'editar_secao' secao.id %}" class="btn btn-warning">Editar</a>
+                            <a href="{% url 'deletar_secao' secao.id %}" class="btn btn-danger">Deletar</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted">Nenhuma seção encontrada.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
